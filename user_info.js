@@ -1,42 +1,15 @@
-function $(str) {
-	return document.getElementById(str);
-}
-function loadData(url, callBack) {
-	fetch(url)
-		.then((response) => response.json())
-		.then((data) => callBack(data));
-}
-function displayYear(previousTime) {
-	let now = new Date();
-	now = now.getTime() / 1000;
-	let timeDifference = now - previousTime;
-	let yearUnit = 31556952;
-	let monthUnit = 2629746;
-	let weekUnit = 604800;
-	let dayUnit = 86400;
-	let hoursUnit = 3600;
-	let minutesUnit = 60;
-	let year = timeDifference / yearUnit;
-	year = Math.floor(year);
-	let month = timeDifference / monthUnit;
-	month = Math.floor(month);
-	let week = timeDifference / weekUnit;
-	week = Math.floor(week);
-	let day = timeDifference / dayUnit;
-	day = Math.floor(day);
-	let hours = timeDifference / hoursUnit;
-	hours = Math.floor(hours);
-	let minutes = timeDifference / minutesUnit;
-	minutes = Math.floor(minutes);
-
-	if (year >= 1) return `${year} years ago`;
-	else if (month >= 1) return `${month} months ago`;
-	else if (week >= 1) return `${week} weeks ago`;
-	else if (day >= 1) return `${day} days ago`;
-	else if (hours >= 1) return `${hours} hours ago`;
-	else if (minutes >= 1) return `${minutes} minutes ago`;
-	else return `few moments ago`;
-}
+$("submit").addEventListener("click", () => {
+	let userHandle = $("handle").value;
+	userHandle = userHandle.trim();
+	$("error").innerText = "";
+	if (userHandle == "") $("error").innerText = `*Input field can't be empty`;
+	else {
+		let url = `https://codeforces.com/api/user.info?handles=${userHandle}`;
+		loadData(url, displayData);
+		let url2 = `https://codeforces.com/api/user.rating?handle=${userHandle}`;
+		loadData(url2, displayRatingInfo);
+	}
+});
 function displayData(data) {
 	console.log(data);
 
@@ -49,13 +22,13 @@ function displayData(data) {
 			friendOfCount = 0,
 			organization = "",
 			rating = "unrated",
-			maxRating,
+			maxRating = "unrated",
 			contribution,
 			lastOnlineTimeSeconds,
 			registrationTimeSeconds,
 			handle,
-			rank,
-			maxRank,
+			rank = "unrated",
+			maxRank = "unrated",
 		} = data.result[0];
 		let pupil = "";
 		let contribute = contribution;
@@ -64,10 +37,12 @@ function displayData(data) {
 		let onlineStatus = displayYear(lastOnlineTimeSeconds);
 		if (onlineStatus == "few moments ago") onlineStatus = "Online Now";
 
-		let child = $("user");
-		if (child) {
-			document.getElementsByTagName("body")[0].removeChild(child);
-		}
+		// let child = $("user");
+		// if (child) {
+		// 	document.getElementsByTagName("body")[0].removeChild(child);
+		// }
+		$("wrapper").textContent = "";
+
 		const div = document.createElement("div");
 		div.id = "user";
 		div.setAttribute("class", "container w-75 mx-auto border p-4 rounded-3");
@@ -111,23 +86,47 @@ function displayData(data) {
 			<p class="lst ">Last visit: ${onlineStatus}</p>
 			<p class="lst">Registered: ${displayYear(registrationTimeSeconds)}</p>`;
 
-		document.getElementsByTagName("body")[0].appendChild(div);
+		$("wrapper").appendChild(div);
 		if (onlineStatus == "few moments ago") {
 			document.getElementsByClassName("lst")[0].classList.add("online");
 		} else {
 			document.getElementsByClassName("lst")[0].classList.add("offline");
 		}
+
+		return true;
 	} else {
-		$("error").innerText = `user not found`;
+		$("error").innerText = `*user not found`;
+		return false;
 	}
 }
-$("submit").onclick = () => {
-	let userHandle = $("handle").value;
-	userHandle = userHandle.trim();
-	$("error").innerText = "";
-	if (userHandle == "") $("error").innerText = `*Input field can't be empty`;
-	else {
-		let url = `https://codeforces.com/api/user.info?handles=${userHandle}`;
-		loadData(url, displayData);
-	}
-};
+function displayYear(previousTime) {
+	let now = new Date();
+	now = now.getTime() / 1000;
+	let timeDifference = now - previousTime;
+	let yearUnit = 31556952;
+	let monthUnit = 2629746;
+	let weekUnit = 604800;
+	let dayUnit = 86400;
+	let hoursUnit = 3600;
+	let minutesUnit = 60;
+	let year = timeDifference / yearUnit;
+	year = Math.floor(year);
+	let month = timeDifference / monthUnit;
+	month = Math.floor(month);
+	let week = timeDifference / weekUnit;
+	week = Math.floor(week);
+	let day = timeDifference / dayUnit;
+	day = Math.floor(day);
+	let hours = timeDifference / hoursUnit;
+	hours = Math.floor(hours);
+	let minutes = timeDifference / minutesUnit;
+	minutes = Math.floor(minutes);
+
+	if (year >= 1) return `${year} years ago`;
+	else if (month >= 1) return `${month} months ago`;
+	else if (week >= 1) return `${week} weeks ago`;
+	else if (day >= 1) return `${day} days ago`;
+	else if (hours >= 1) return `${hours} hours ago`;
+	else if (minutes >= 1) return `${minutes} minutes ago`;
+	else return `few moments ago`;
+}
