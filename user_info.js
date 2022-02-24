@@ -1,4 +1,5 @@
 $("submit").addEventListener("click", () => {
+	$("wrapper").textContent = "";
 	let userHandle = $("handle").value;
 	userHandle = userHandle.trim();
 	$("error").innerText = "";
@@ -45,7 +46,10 @@ function displayData(data) {
 
 		const div = document.createElement("div");
 		div.id = "user";
-		div.setAttribute("class", "container w-75 mx-auto border p-4 rounded-3");
+		div.setAttribute(
+			"class",
+			"container w-75 mx-auto border p-lg-4 rounded-3  p-sm-2"
+		);
 		div.innerHTML = `<h1 class="text-center mb-3 user-heading">User Information</h1>
 		<div id="info">
 			<h5 id="title" class="${rank}">${rank}</h5>
