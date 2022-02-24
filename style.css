@@ -1,0 +1,79 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+#error {
+	color: red;
+	font-size: 12px;
+	font-weight: 600;
+}
+.container {
+	max-width: 90vw !important;
+	border-radius: 8px !important;
+}
+.container #input #handle {
+	height: 32px;
+	border-radius: 3px;
+	border: 0.08rem solid rgb(0, 0, 0);
+}
+.container #submit {
+	height: 32px !important;
+	padding: 0 !important;
+	padding-left: 8px !important;
+	padding-right: 8px !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.rating {
+	color: green;
+	font-weight: 600;
+}
+#user #info p img ~ span,
+.lst {
+	margin-left: 6px;
+}
+a {
+	color: blue !important;
+}
+.online {
+	color: green;
+	font-weight: 600;
+}
+.pupil {
+	color: green;
+	font-weight: 600;
+	text-transform: capitalize;
+}
+.specialist {
+	color: #03a89e !important;
+	font-weight: 600;
+	text-transform: capitalize;
+}
+.master {
+	color: #ff8c00 !important;
+	font-weight: 600 !important;
+	text-transform: capitalize;
+}
+.grandmaster,
+.legendary {
+	color: red;
+	font-weight: bold;
+	text-transform: capitalize;
+}
+.lower {
+	text-transform: lowercase !important;
+}
+.expert {
+	color: blue !important;
+	font-weight: 600;
+	text-transform: capitalize;
+}
+.candidate {
+	color: #a0a !important;
+	font-weight: 600;
+	text-transform: capitalize;
+}
+.legendary::first-letter {
+	color: black !important;
+}
